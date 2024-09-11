@@ -63,7 +63,7 @@ final class LocalStorage {
             .map(Profile.init(from:))
     }
 
-    func saveArticles(_ articles: [Article]) async throws {
+    func saveArticles(_ articles: [Article], for category: NewsApi.Category?) async throws {
         try await db.collection(Collection.articles)
             .getDocuments()
             .documents
@@ -74,17 +74,28 @@ final class LocalStorage {
                     .delete()
             }
         for article in articles {
+            var data = article.data
+            data["category"] = category?.id
             try await db.collection(Collection.articles)
                 .document(article.id)
-                .setData(article.data)
+                .setData(data)
         }
     }
 
-    func retrieveArticles() async throws -> [Article] {
+    func retrieveArticles(in category: NewsApi.Category?) async throws -> [Article] {
         logger.debug("Fetching articles from local storage")
-        return try await db.collection(Collection.articles)
-            .order(by: "date", descending: true)
-            .getDocuments()
+        let collection = db.collection(Collection.articles)
+        let query: Query
+        if let category {
+            query = collection
+                .whereField("category", isEqualTo: category.id)
+                .order(by: "date", descending: true)
+        }
+        else {
+            query = collection
+                .order(by: "date", descending: true)
+        }
+        return try await query.getDocuments()
             .documents
             .map { $0.data() }
             .map(Article.init(from:))

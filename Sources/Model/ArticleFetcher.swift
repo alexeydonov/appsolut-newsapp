@@ -35,20 +35,20 @@ final class ArticleFetcher {
         cancellables.forEach { $0.cancel() }
     }
 
-    func fetchArticles() async throws -> [Article] {
+    func fetchArticles(in category: NewsApi.Category?) async throws -> [Article] {
         let articles: [Article]
 
         logger.debug("Fetching articles")
         if networkPresent {
             logger.debug("Network present")
-            articles = try await newsApi.fetchArticles()
+            articles = try await newsApi.fetchArticles(category: category)
             Task {
-                try await local.saveArticles(articles)
+                try await local.saveArticles(articles, for: category)
             }
         }
         else {
             logger.debug("No network")
-            articles = try await local.retrieveArticles()
+            articles = try await local.retrieveArticles(in: category)
         }
 
         return articles

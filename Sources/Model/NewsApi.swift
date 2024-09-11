@@ -37,6 +37,15 @@ fileprivate struct NewsApiProperties: Decodable {
 }
 
 final class NewsApi {
+    struct Category: Identifiable {
+        var id: String
+        var title: String
+
+        static var all: [Category] {
+            ["travel", "technology", "business"].map { Category(id: $0, title: $0.capitalized) }
+        }
+    }
+
     private let logger = Logger(subsystem: "NewsApp", category: "NewsApi")
 
     private var key: String?
@@ -49,13 +58,17 @@ final class NewsApi {
         self.key = properties.key
     }
 
-    func fetchArticles() async throws -> [Article] {
+    func fetchArticles(category: Category? = nil) async throws -> [Article] {
         logger.debug("Fetching articles from network")
         guard let key = self.key else {
             throw AppError.configuration("No newsapi.org API key")
         }
 
-        var request = URLRequest(url: URL(string: "https://newsapi.org/v2/everything")!)
+        var components = URLComponents(string: "https://newsapi.org/v2/everything")!
+        if let category {
+            components.queryItems = [URLQueryItem(name: "q", value: category.id)]
+        }
+        var request = URLRequest(url: components.url!)
         request.addValue(key, forHTTPHeaderField: "X-Api-Key")
         let data = try await URLSession.shared.data(for: request)
         let response = try JSONDecoder().decode(NewsResponse.self, from: data.0)

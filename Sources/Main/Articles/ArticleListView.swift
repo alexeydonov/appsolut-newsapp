@@ -45,7 +45,23 @@ struct ArticleListView: View {
 
         case .ready(let list):
             NavigationStack(path: $path) {
-                // TODO: Filters
+                HStack(spacing: 16) {
+                    ForEach(source.categories) { category in
+                        Button {
+                            source.selectedCategory = category
+                        } label: {
+                            RoundedRectangle(cornerRadius: 56)
+                                .foregroundStyle(category.id == source.selectedCategory?.id ? Color.hex(0xE9EEFA) : .white)
+                                .frame(height: 32)
+                                .overlay {
+                                    Text(category.title)
+                                        .font(.inter(size: 14).weight(.semibold))
+                                        .foregroundStyle(.black)
+                                }
+                        }
+                    }
+                }
+                .padding(.horizontal)
                 List {
                     ForEach(list) { article in
                         Button {

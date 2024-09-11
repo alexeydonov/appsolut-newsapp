@@ -20,6 +20,15 @@ class ArticleListSource: ObservableObject {
 
     private let fetcher = ArticleFetcher()
 
+    @Published var selectedCategory: NewsApi.Category? {
+        didSet {
+            fetchArticles()
+        }
+    }
+    @Published var categories: [NewsApi.Category] = {
+        NewsApi.Category.all
+    }()
+
     init(state: ArticleListSourceState) {
         self.state = state
     }
@@ -29,7 +38,7 @@ class ArticleListSource: ObservableObject {
 
         Task {
             do {
-                let articles = try await fetcher.fetchArticles()
+                let articles = try await fetcher.fetchArticles(in: selectedCategory)
                 state = .ready(articles)
             } catch {
                 state = .error(error)

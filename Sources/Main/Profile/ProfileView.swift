@@ -48,11 +48,14 @@ struct ProfileView: View {
                         .frame(width: 92, height: 26)
                         .disabled(manager.hasPremium ?? true)
                     }
-                    Divider()
-                    HStack {
-                        Text("Bookmarks")
-                            .font(.inter(size: 24).weight(.bold))
-                        Spacer()
+                    .padding(.vertical)
+                    if !manager.bookmarks.isEmpty {
+                        Divider()
+                        HStack {
+                            Text("Bookmarks")
+                                .font(.inter(size: 24).weight(.bold))
+                            Spacer()
+                        }
                     }
                 }
                 ForEach(manager.bookmarks) { article in

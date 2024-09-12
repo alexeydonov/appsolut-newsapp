@@ -22,7 +22,7 @@ struct ArticleListView: View {
                 }
 
         case .error(let error):
-            VStack(spacing: 20) {
+            VStack(spacing: 50) {
                 Image(systemName: "exclamationmark.triangle")
                     .resizable()
                     .frame(width: 48, height: 48)
@@ -33,49 +33,76 @@ struct ArticleListView: View {
                     Text(error.localizedDescription)
                         .font(.inter(size: 16))
                 }
-                Button(action: {
+                Button {
                     source.fetchArticles()
-                }, label: {
-                    Label(
-                        title: { Text("Retry") },
-                        icon: { Image(systemName: "arrow.circlepath") }
-                    )
-                })
+                } label: {
+                    Label {
+                        Text("Retry")
+                    } icon: {
+                        Image(systemName: "arrow.circlepath")
+                    }
+                }
             }.padding()
 
         case .ready(let list):
-            NavigationStack(path: $path) {
-                HStack(spacing: 16) {
-                    ForEach(source.categories) { category in
-                        Button {
-                            source.selectedCategory = category
-                        } label: {
-                            RoundedRectangle(cornerRadius: 56)
-                                .foregroundStyle(category.id == source.selectedCategory.id ? Color.hex(0xE9EEFA) : .white)
-                                .frame(height: 32)
-                                .overlay {
-                                    Text(category.title)
-                                        .font(.inter(size: 14).weight(.semibold))
-                                        .foregroundStyle(.black)
-                                }
+            if list.isEmpty {
+                VStack(spacing: 50) {
+                    VStack(spacing: 10) {
+                        Image(systemName: "network")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+                            .foregroundStyle(.secondary)
+                        Text("Check your network connection")
+                            .font(.inter(size: 20).weight(.semibold))
+                            .foregroundStyle(.secondary)
+                    }
+                    Button {
+                        source.fetchArticles()
+                    } label: {
+                        Label {
+                            Text("Retry")
+                        } icon: {
+                            Image(systemName: "arrow.circlepath")
                         }
+
                     }
                 }
-                .padding(.horizontal)
-                List {
-                    ForEach(list) { article in
-                        Button {
-                            path.append(article)
-                        } label: {
-                            ArticleListItemView(article: article)
+            }
+            else {
+                NavigationStack(path: $path) {
+                    HStack(spacing: 16) {
+                        ForEach(source.categories) { category in
+                            Button {
+                                source.selectedCategory = category
+                            } label: {
+                                RoundedRectangle(cornerRadius: 56)
+                                    .foregroundStyle(category.id == source.selectedCategory.id ? Color.hex(0xE9EEFA) : .white)
+                                    .frame(height: 32)
+                                    .overlay {
+                                        Text(category.title)
+                                            .font(.inter(size: 14).weight(.semibold))
+                                            .foregroundStyle(.black)
+                                    }
+                            }
                         }
                     }
-                }
-                .listStyle(.plain)
-                .navigationDestination(for: Article.self) { article in
-                    let manager = ArticleDetailManager(article)
-                    return ArticleDetailView(manager: manager) {
-                        path.removeLast()
+                    .padding(.horizontal)
+                    List {
+                        ForEach(list) { article in
+                            Button {
+                                path.append(article)
+                            } label: {
+                                ArticleListItemView(article: article)
+                            }
+                        }
+                    }
+                    .listStyle(.plain)
+                    .navigationDestination(for: Article.self) { article in
+                        let manager = ArticleDetailManager(article)
+                        return ArticleDetailView(manager: manager) {
+                            path.removeLast()
+                        }
                     }
                 }
             }
@@ -95,6 +122,10 @@ struct ArticleListView: View {
     ArticleListView(source: MockArticleListSource.ready)
 }
 
+#Preview("Empty") {
+    ArticleListView(source: MockArticleListSource.empty)
+}
+
 fileprivate class MockArticleListSource: ArticleListSource {
     static var fetching: MockArticleListSource {
         MockArticleListSource(state: .fetching)
@@ -111,6 +142,10 @@ fileprivate class MockArticleListSource: ArticleListSource {
             articles.append(.sample(id: "\(i)"))
         }
         return MockArticleListSource(state: .ready(articles))
+    }
+
+    static var empty: MockArticleListSource {
+        MockArticleListSource(state: .ready([]))
     }
 
     override func fetchArticles() {

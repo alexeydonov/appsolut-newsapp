@@ -26,6 +26,7 @@ final class Authenticator {
         }
     }
 
+    @MainActor
     func signIn(with controller: UIViewController) async throws -> String {
         if let token = try await restorePreviousSignIn() {
             return token

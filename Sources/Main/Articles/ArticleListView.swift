@@ -51,7 +51,7 @@ struct ArticleListView: View {
                             source.selectedCategory = category
                         } label: {
                             RoundedRectangle(cornerRadius: 56)
-                                .foregroundStyle(category.id == source.selectedCategory?.id ? Color.hex(0xE9EEFA) : .white)
+                                .foregroundStyle(category.id == source.selectedCategory.id ? Color.hex(0xE9EEFA) : .white)
                                 .frame(height: 32)
                                 .overlay {
                                     Text(category.title)

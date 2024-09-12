@@ -57,25 +57,18 @@ struct ProfileView: View {
                 }
                 ForEach(manager.bookmarks) { article in
                     Button {
-                        if let hasPremium = manager.hasPremium {
-                            if hasPremium {
-                                path.append(article)
-                            }
-                            else {
-                                premiumSheetVisible.toggle()
-                            }
-                        }
+                        path.append(article)
                     } label: {
                         ArticleListItemView(article: article)
                     }
                 }
             }
             .listStyle(.plain)
-        }
-        .navigationDestination(for: Article.self) { article in
-            let manager = ArticleDetailManager(article)
-            return ArticleDetailView(manager: manager) {
-                path.removeLast()
+            .navigationDestination(for: Article.self) { article in
+                let manager = ArticleDetailManager(article)
+                return ArticleDetailView(manager: manager) {
+                    path.removeLast()
+                }
             }
         }
         .sheet(isPresented: $premiumSheetVisible) {

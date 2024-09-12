@@ -14,10 +14,17 @@ fileprivate struct NewsResponse: Decodable {
     var articles: [NewsArticle]
 }
 
+fileprivate struct NewsSource: Decodable {
+    var id: String?
+    var name: String?
+}
+
 fileprivate struct NewsArticle: Decodable {
-    var author: String
+    var source: NewsSource
+    var author: String?
     var title: String
-    var urlToImage: URL
+    var url: URL
+    var urlToImage: URL?
     var publishedAt: Date
     var content: String
 
@@ -25,10 +32,11 @@ fileprivate struct NewsArticle: Decodable {
         Article(id: UUID().uuidString,
                 title: title,
                 content: content,
+                url: url,
                 image: urlToImage,
                 date: publishedAt,
                 authorAvatar: nil,
-                authorName: author)
+                authorName: author ?? (source.name ?? "Unknown author"))
     }
 }
 
@@ -49,6 +57,22 @@ final class NewsApi {
     private let logger = Logger(subsystem: "NewsApp", category: "NewsApi")
 
     private var key: String?
+
+    private lazy var posixDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        formatter.timeZone = TimeZone(abbreviation: "GMT")
+
+        return formatter
+    }()
+
+    private lazy var decoder: JSONDecoder = {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(posixDateFormatter)
+
+        return decoder
+    }()
 
     init() {
         guard let url = Bundle.main.url(forResource: "NewsApi-Info", withExtension: "plist"),
@@ -71,7 +95,7 @@ final class NewsApi {
         var request = URLRequest(url: components.url!)
         request.addValue(key, forHTTPHeaderField: "X-Api-Key")
         let data = try await URLSession.shared.data(for: request)
-        let response = try JSONDecoder().decode(NewsResponse.self, from: data.0)
+        let response = try decoder.decode(NewsResponse.self, from: data.0)
 
         return response.articles.map(\.article)
     }

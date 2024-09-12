@@ -33,8 +33,22 @@ final class IAP {
     func product() async throws -> Product? {
         if cachedProduct == nil {
             cachedProduct = try await Product.products(for: [Self.subscriptionId]).first
+            logger.debug("Subscription product: \(self.cachedProduct?.debugDescription ?? "No product")")
         }
         return cachedProduct
+    }
+
+    func checkSubscription() async throws -> Bool {
+        guard let subscription = try await product()?.subscription else { return false }
+
+        for status in try await subscription.status {
+            switch status.state {
+            case .subscribed: return true
+            default: continue
+            }
+        }
+
+        return false
     }
 
     func purchaseSubscription() async throws {
@@ -48,10 +62,12 @@ final class IAP {
             logger.info("Purchase result received")
 
             switch result {
-            case .success: break
+            case .success(.verified(let transaction)):
+                subscriptionStatusPublisher.send(true)
+                await transaction.finish()
             case .userCancelled: break
             case .pending: break
-            @unknown default: throw AppError.failedPurchase("Unknown error")
+            default: throw AppError.failedPurchase("Unknown error")
             }
         } catch {
             throw error
@@ -66,7 +82,9 @@ final class IAP {
                 logger.info("Transaction update received: \(update.debugDescription)")
                 do {
                     let transaction = try verifyPurchase(update)
-                    try await updatePurchases()
+                    if transaction.productID == Self.subscriptionId {
+                        subscriptionStatusPublisher.send(true)
+                    }
                     await transaction.finish()
                 }
                 catch {
@@ -82,23 +100,6 @@ final class IAP {
             throw AppError.failedPurchase("Transaction is not verified")
         case .verified(let safe):
             return safe
-        }
-    }
-
-    private func updatePurchases() async throws {
-        for await entitlement in Transaction.currentEntitlements {
-            do {
-                let verifiedPurchase = try verifyPurchase(entitlement)
-                switch verifiedPurchase.productType {
-                case .autoRenewable:
-                    if verifiedPurchase.productID == Self.subscriptionId {
-                        subscriptionStatusPublisher.send(true)
-                    }
-                default: break
-                }
-            } catch {
-                throw error
-            }
         }
     }
 

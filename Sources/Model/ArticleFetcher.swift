@@ -35,7 +35,7 @@ final class ArticleFetcher {
         cancellables.forEach { $0.cancel() }
     }
 
-    func fetchArticles(in category: NewsApi.Category?) async throws -> [Article] {
+    func fetchArticles(in category: NewsApi.Category) async throws -> [Article] {
         let articles: [Article]
 
         logger.debug("Fetching articles")

@@ -9,11 +9,11 @@ import SwiftUI
 
 extension Font {
     static func inter(size: Int) -> Font {
-        Font.custom("Inter", size: CGFloat(size))
+        Font.custom("Inter-Regular", size: CGFloat(size))
     }
 
     static func libre(size: Int) -> Font {
-        Font.custom("LibreFranklin", size: CGFloat(size))
+        Font.custom("LibreFranklinRoman", size: CGFloat(size))
     }
 
     static func merriweather(size: Int) -> Font {

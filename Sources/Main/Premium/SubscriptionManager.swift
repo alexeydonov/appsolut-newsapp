@@ -14,13 +14,11 @@ class SubscriptionManager: ObservableObject {
 
     private var cancellables: [AnyCancellable] = []
 
-    @Published private(set) var subscribed = false
     @Published private(set) var price: String?
     @Published private(set) var period: String?
 
     init() {
         fetchPrice()
-        startIAPTracking()
     }
 
     private func fetchPrice() {
@@ -37,12 +35,6 @@ class SubscriptionManager: ObservableObject {
                 period = periodUnit
             }
         }
-    }
-
-    private func startIAPTracking() {
-        iap.subscriptionStatusPublisher.sink { subscribed in
-            self.subscribed = subscribed
-        }.store(in: &cancellables)
     }
 
     func subscribe() {

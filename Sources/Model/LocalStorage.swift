@@ -51,7 +51,7 @@ final class LocalStorage {
             .document(profile.idToken!.tokenString)
             .setData([
                 "name": profile.profile!.name,
-                "avatar": profile.profile!.imageURL(withDimension: 120) as Any
+                "avatar": profile.profile!.imageURL(withDimension: 120)?.absoluteString as Any
             ])
     }
 
@@ -63,7 +63,8 @@ final class LocalStorage {
             .map(Profile.init(from:))
     }
 
-    func saveArticles(_ articles: [Article], for category: NewsApi.Category?) async throws {
+    func saveArticles(_ articles: [Article], for category: NewsApi.Category) async throws {
+        logger.debug("Removing old articles")
         try await db.collection(Collection.articles)
             .getDocuments()
             .documents
@@ -73,29 +74,22 @@ final class LocalStorage {
                     .document(id)
                     .delete()
             }
+        logger.debug("Saving \(articles.count) new articles in \(category.title) category")
         for article in articles {
             var data = article.data
-            data["category"] = category?.id
+            data["category"] = category.id
             try await db.collection(Collection.articles)
                 .document(article.id)
                 .setData(data)
         }
     }
 
-    func retrieveArticles(in category: NewsApi.Category?) async throws -> [Article] {
+    func retrieveArticles(in category: NewsApi.Category) async throws -> [Article] {
         logger.debug("Fetching articles from local storage")
-        let collection = db.collection(Collection.articles)
-        let query: Query
-        if let category {
-            query = collection
-                .whereField("category", isEqualTo: category.id)
-                .order(by: "date", descending: true)
-        }
-        else {
-            query = collection
-                .order(by: "date", descending: true)
-        }
-        return try await query.getDocuments()
+        return try await db.collection(Collection.articles)
+            .whereField("category", isEqualTo: category.id)
+            .order(by: "date", descending: true)
+            .getDocuments()
             .documents
             .map { $0.data() }
             .map(Article.init(from:))
@@ -111,8 +105,7 @@ final class LocalStorage {
 
     func checkBookmark(_ id: String) async -> Bool {
         do {
-            let _ = try await db.collection(Collection.bookmarks).document(id).getDocument()
-            return true
+            return try await db.collection(Collection.bookmarks).document(id).getDocument().exists
         }
         catch {
             return false
@@ -135,12 +128,13 @@ final class LocalStorage {
 fileprivate extension Article {
     init(from data: [String : Any]) {
         self.init(id: data["id"] as! String,
-                    title: data["title"] as! String,
-                    content: data["content"] as! String,
-                    image: data["image"] as! URL?,
-                    date: data["date"] as! Date,
-                    authorAvatar: data["authorAvatar"] as! URL?,
-                    authorName: data["authorName"] as! String)
+                  title: data["title"] as! String,
+                  content: data["content"] as! String,
+                  url: URL(string: data["url"] as! String)!,
+                  image: (data["image"] as? String).flatMap { URL(string: $0)! },
+                  date: (data["date"] as! Timestamp).dateValue(),
+                  authorAvatar: (data["authorAvatar"] as? String).flatMap { URL(string: $0) },
+                  authorName: data["authorName"] as! String)
     }
 
     var data: [String : Any] {
@@ -148,9 +142,10 @@ fileprivate extension Article {
             "id": self.id,
             "title": self.title,
             "content": self.content,
-            "image": self.image as Any,
+            "url": self.url.absoluteString,
+            "image": self.image?.absoluteString as Any,
             "date": self.date,
-            "authorAvatar": self.authorAvatar as Any,
+            "authorAvatar": self.authorAvatar?.absoluteString as Any,
             "authorName": self.authorName
         ]
     }
@@ -159,6 +154,6 @@ fileprivate extension Article {
 fileprivate extension Profile {
     init(from data: [String : Any]) {
         self.init(name: data["name"] as! String,
-                  avatar: data["avatar"] as! URL?)
+                  avatar: (data["avatar"] as! String?).flatMap { URL(string: $0) })
     }
 }

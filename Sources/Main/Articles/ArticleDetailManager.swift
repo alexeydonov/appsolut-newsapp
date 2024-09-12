@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit
 
 @MainActor
 class ArticleDetailManager: ObservableObject {
@@ -38,6 +39,7 @@ class ArticleDetailManager: ObservableObject {
 
         startSubscriptionTracking()
         Task {
+            hasPremium = try await IAP.shared.checkSubscription()
             isBookmarked = await storage.checkBookmark(article.id)
         }
     }
@@ -78,5 +80,7 @@ class ArticleDetailManager: ObservableObject {
             premiumSheetRequested = true
             return
         }
+
+        UIApplication.shared.open(article.url)
     }
 }

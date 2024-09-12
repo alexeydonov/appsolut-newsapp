@@ -124,7 +124,7 @@ struct ArticleDetailView: View {
             .offset(x: 0, y:  -(articleContent.startingRect?.maxY ?? UIScreen.main.bounds.height))
         }
         .edgesIgnoringSafeArea(.all)
-        .toolbar(.hidden, for: .navigationBar)
+        .toolbar(.hidden, for: .navigationBar, .tabBar)
         .toolbar {
             ToolbarItemGroup(placement: .bottomBar) {
                 Button {
@@ -210,6 +210,7 @@ te dictumst mattis egestas laoreet, cubilia habitant magnis lacinia vivamus etia
 Sagittis vivamus sem morbi nam mattis phasellus vehicula facilisis suscipit posuere metus, iaculis vestibulum viverra nisl ullamcorper lectus curabitur himenaeos dictumst malesuada tempor, cras maecenas enim est eu turpis hac sociosqu tellus magnis. Sociosqu varius feugiat volutpat justo fames magna malesuada, viverra neque nibh parturient eu nascetur, cursus sollicitudin placerat lobortis nunc imperdiet. Leo lectus euismod morbi placerat pretium aliquet ultricies metus, augue turpis vulputa
 te dictumst mattis egestas laoreet, cubilia habitant magnis lacinia vivamus etiam aenean.
 """,
+            url: URL(string: "https://apple.com")!,
             image: URL(string: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Shaqi_jrvej.jpg/1200px-Shaqi_jrvej.jpg"),
             date: Date(),
             authorAvatar: URL(string: "https://gravatar.com/avatar/282ca84afab836f2adacaa7547ba912fa94c3be40622178fa8f1e94c96ba2cd9"),

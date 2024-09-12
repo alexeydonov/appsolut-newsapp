@@ -11,6 +11,7 @@ struct Article: Identifiable, Hashable {
     var id: String
     var title: String
     var content: String
+    var url: URL
     var image: URL?
     var date: Date
     var authorAvatar: URL?

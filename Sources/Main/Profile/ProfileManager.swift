@@ -37,7 +37,14 @@ class ProfileManager: ObservableObject {
             hasPremium = status
         }.store(in: &cancellables)
         Task {
+            hasPremium = try await IAP.shared.checkSubscription()
             profile = try await LocalStorage.shared.fetchProfile(id: id)
+        }
+    }
+
+    func subscribe() {
+        Task {
+            try await IAP.shared.purchaseSubscription()
         }
     }
 }

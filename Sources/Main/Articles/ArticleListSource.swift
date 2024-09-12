@@ -16,11 +16,11 @@ enum ArticleListSourceState {
 
 @MainActor
 class ArticleListSource: ObservableObject {
-    private(set) var state: ArticleListSourceState
+    @Published private(set) var state: ArticleListSourceState
 
     private let fetcher = ArticleFetcher()
 
-    @Published var selectedCategory: NewsApi.Category? {
+    @Published var selectedCategory = NewsApi.Category.all.first! {
         didSet {
             fetchArticles()
         }

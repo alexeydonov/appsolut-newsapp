@@ -47,11 +47,12 @@ class AppViewState: ObservableObject {
 
     func signIn() {
         logger.debug("User initiated sign in")
+
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
+
         Task {
             do {
-                guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-                guard let rootViewController = windowScene.windows.first?.rootViewController else { return }
-
                 let token = try await authenticator.signIn(with: rootViewController)
                 self.state = .signedIn(token)
             }

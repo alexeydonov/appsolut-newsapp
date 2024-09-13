@@ -23,4 +23,8 @@ extension Font {
     static func schibsted(size: Int) -> Font {
         Font.custom("SchibstedGrotesk", size: CGFloat(size))
     }
+
+    static func poppins(size: Int) -> Font {
+        Font.custom("Poppins-SemiBold", size: CGFloat(size))
+    }
 }

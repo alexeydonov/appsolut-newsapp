@@ -31,8 +31,25 @@ struct WelcomeView: View {
                             Text("NewsApp brings you the world’s best journalism, all in one place. Trusted sources, curated by editors, and personalized for you.")
                                 .font(.schibsted(size: 18))
                         }
-                        GoogleSignInButton(viewModel: GoogleSignInButtonViewModel.customized) {
-                            authenticator.signIn()
+                        HStack {
+                            Spacer()
+                            GoogleSignInButton {
+                                authenticator.signIn()
+                            }
+                            .frame(width: 240, height: 66)
+                            .overlay {
+                                ZStack {
+                                    Color.hex(0xEEF1F4)
+                                    Label {
+                                        Text("Sign in with Google")
+                                            .font(.poppins(size: 16).weight(.semibold))
+                                    } icon: {
+                                        Image("google-icon")
+                                    }
+                                }
+                                .frame(width: 248, height: 66)
+                            }
+                            Spacer()
                         }
                     }.padding(24)
                 }.background(.white).cornerRadius(24)

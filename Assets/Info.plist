@@ -3,21 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.179151462645-3rm1qfp6cpq4udpodkm2sh0qsoimig18</string>
-			</array>
-		</dict>
-	</array>
-	<key>NEWS_API_KEY</key>
-	<string>$(NEWS_API_KEY)</string>
+	<array/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter.ttf</string>
+		<string>Poppins-SemiBold.ttf</string>
 		<string>LibreFranklin.ttf</string>
 		<string>Merriweather-Regular.ttf</string>
 		<string>SchibstedGrotesk.ttf</string>

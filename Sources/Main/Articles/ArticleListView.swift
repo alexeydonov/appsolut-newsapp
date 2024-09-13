@@ -76,14 +76,27 @@ struct ArticleListView: View {
                             Button {
                                 source.selectedCategory = category
                             } label: {
-                                RoundedRectangle(cornerRadius: 56)
-                                    .foregroundStyle(category.id == source.selectedCategory.id ? Color.hex(0xE9EEFA) : .white)
-                                    .frame(height: 32)
-                                    .overlay {
-                                        Text(category.title)
-                                            .font(.inter(size: 14).weight(.semibold))
-                                            .foregroundStyle(.black)
-                                    }
+                                if source.selectedCategory.id == category.id {
+                                    RoundedRectangle(cornerRadius: 56)
+                                        .foregroundStyle(Color.hex(0xE9EEFA))
+                                        .frame(height: 32)
+                                        .overlay {
+                                            Text(category.title)
+                                                .font(.inter(size: 14).weight(.semibold))
+                                                .foregroundStyle(.black)
+                                        }
+                                }
+                                else {
+                                    RoundedRectangle(cornerRadius: 56)
+                                        .foregroundStyle(Color.hex(0xE9EEFA))
+                                        .frame(height: 32)
+                                        .clipShape(.rect(cornerRadius: 56).stroke())
+                                        .overlay {
+                                            Text(category.title)
+                                                .font(.inter(size: 14).weight(.semibold))
+                                                .foregroundStyle(.black)
+                                        }
+                                }
                             }
                         }
                     }

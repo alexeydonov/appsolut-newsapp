@@ -51,6 +51,7 @@
 		8AB6D2A52C8DC4E5008C1044 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB6D2A42C8DC4E5008C1044 /* Fonts.swift */; };
 		8AB6D2A72C8DD9F4008C1044 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB6D2A62C8DD9F4008C1044 /* AppError.swift */; };
 		8AB6D2A92C8DDAAD008C1044 /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB6D2A82C8DDAAD008C1044 /* Authenticator.swift */; };
+		8AFE41412C9404E500703520 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8A8D7BEA2C93FFCA007B0CC3 /* Poppins-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		8A7EB7F92C8EE4FE00F4DB91 /* IAP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAP.swift; sourceTree = "<group>"; };
 		8A7EB7FB2C8F0B9E00F4DB91 /* Subscription.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Subscription.storekit; path = Assets/Subscription.storekit; sourceTree = SOURCE_ROOT; };
 		8A7EB7FD2C8F0F8E00F4DB91 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
+		8A8D7BEA2C93FFCA007B0CC3 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		8AB6D2812C8C9E88008C1044 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8AB6D2832C8C9EE4008C1044 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AB6D2872C8CA744008C1044 /* NewsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsApi.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 		8AB6D2A32C8DC4CC008C1044 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				8A8D7BEA2C93FFCA007B0CC3 /* Poppins-SemiBold.ttf */,
 				8AB6D29B2C8DC32D008C1044 /* Inter.ttf */,
 				8AB6D29D2C8DC480008C1044 /* LibreFranklin.ttf */,
 				8AB6D29F2C8DC4A6008C1044 /* Merriweather-Regular.ttf */,
@@ -333,6 +336,7 @@
 			files = (
 				8A7EB7FC2C8F0B9F00F4DB91 /* Subscription.storekit in Resources */,
 				8AB6D2A22C8DC4C5008C1044 /* SchibstedGrotesk.ttf in Resources */,
+				8AFE41412C9404E500703520 /* Poppins-SemiBold.ttf in Resources */,
 				8A1BEB5C2C8C615700F98F7E /* Preview Assets.xcassets in Resources */,
 				8A1BEB592C8C615700F98F7E /* Assets.xcassets in Resources */,
 				8AB6D29E2C8DC480008C1044 /* LibreFranklin.ttf in Resources */,

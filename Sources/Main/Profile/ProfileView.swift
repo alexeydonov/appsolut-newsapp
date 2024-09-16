@@ -41,8 +41,14 @@ struct ProfileView: View {
                                 .frame(width: 116, height: 40)
                                 .foregroundColor(.hex(0xD9D9D9))
                                 .overlay {
-                                    Text("Subscribe")
-                                        .font(.inter(size: 14).weight(.semibold))
+                                    if manager.hasPremium ?? false {
+                                        Text("Enabled")
+                                            .font(.inter(size: 14).weight(.semibold))
+                                    }
+                                    else {
+                                        Text("Subscribe")
+                                            .font(.inter(size: 14).weight(.semibold))
+                                    }
                                 }
                         }
                         .frame(width: 92, height: 26)

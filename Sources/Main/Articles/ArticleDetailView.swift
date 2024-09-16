@@ -113,7 +113,7 @@ struct ArticleDetailView: View {
                         .clipped()
                         .background(GeometryGetter(rect: self.$headerImageRect))
                     RoundedRectangle(cornerRadius: 24)
-                        .foregroundColor(.white)
+                        .foregroundStyle(.background)
                         .frame(width: geometry.size.width, height: 48)
                         .offset(y: 24)
                 }

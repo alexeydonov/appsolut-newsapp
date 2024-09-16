@@ -94,7 +94,7 @@ struct ArticleListView: View {
                                         .overlay {
                                             Text(category.title)
                                                 .font(.inter(size: 14).weight(.semibold))
-                                                .foregroundStyle(.black)
+                                                .foregroundStyle(.primary)
                                         }
                                 }
                             }

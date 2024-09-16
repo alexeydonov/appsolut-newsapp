@@ -55,7 +55,9 @@ struct PremiumView: View {
                                         }
                                 }
                             }.padding()
-                        }.background(.white).cornerRadius(24)
+                        }
+                        .background(.background)
+                        .cornerRadius(24)
                     }
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)

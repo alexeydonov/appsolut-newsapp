@@ -24,6 +24,7 @@ struct ArticleAuthorView: View {
             }
             else {
                 Image(systemName: "person")
+                    .foregroundStyle(.primary)
             }
             Text(name).font(.inter(size: 12))
             Text("∙").font(.inter(size: 12))

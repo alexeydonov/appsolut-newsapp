@@ -12,12 +12,15 @@ struct WelcomeView: View {
     @EnvironmentObject var authenticator: AppViewState
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .bottom) {
             LinearGradient(
                 colors: [.hex(0x2249D4), .hex(0xE9EEFA)],
                 startPoint: .top,
                 endPoint: .bottom
             ).ignoresSafeArea(.all, edges: [.top])
+            Rectangle()
+                .frame(height: 25)
+                .foregroundStyle(.background)
             VStack(alignment: .leading, spacing: -24) {
                 Spacer()
                 Image("welcome-image")
@@ -43,6 +46,7 @@ struct WelcomeView: View {
                                     Label {
                                         Text("Sign in with Google")
                                             .font(.poppins(size: 16).weight(.semibold))
+                                            .foregroundStyle(.black)
                                     } icon: {
                                         Image("google-icon")
                                     }
@@ -51,8 +55,11 @@ struct WelcomeView: View {
                             }
                             Spacer()
                         }
-                    }.padding(24)
-                }.background(.white).cornerRadius(24)
+                    }
+                    .padding(24)
+                }
+                .background(.background)
+                .cornerRadius(24)
             }
         }
     }

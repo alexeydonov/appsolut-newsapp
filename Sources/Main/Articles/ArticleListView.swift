@@ -138,30 +138,3 @@ struct ArticleListView: View {
 #Preview("Empty") {
     ArticleListView(source: MockArticleListSource.empty)
 }
-
-fileprivate class MockArticleListSource: ArticleListSource {
-    static var fetching: MockArticleListSource {
-        MockArticleListSource(state: .fetching)
-    }
-
-    static var error: MockArticleListSource {
-        let error = NSError(domain: "Error happened :(", code: 0)
-        return MockArticleListSource(state: .error(error))
-    }
-
-    static var ready: MockArticleListSource {
-        var articles = [Article]()
-        for i in 0..<20 {
-            articles.append(.sample(id: "\(i)"))
-        }
-        return MockArticleListSource(state: .ready(articles))
-    }
-
-    static var empty: MockArticleListSource {
-        MockArticleListSource(state: .ready([]))
-    }
-
-    override func fetchArticles() {
-        //
-    }
-}

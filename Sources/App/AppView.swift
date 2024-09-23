@@ -34,13 +34,3 @@ struct AppView: View {
 #Preview("Welcome") {
     AppView(appState: MockAppViewState(state: .welcome))
 }
-
-fileprivate final class MockAppViewState: AppViewState {
-    override func startApp() {
-        //
-    }
-
-    override func signIn() {
-        //
-    }
-}

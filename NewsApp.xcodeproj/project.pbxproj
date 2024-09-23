@@ -31,6 +31,7 @@
 		8A7EB7FA2C8EE4FE00F4DB91 /* IAP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7EB7F92C8EE4FE00F4DB91 /* IAP.swift */; };
 		8A7EB7FC2C8F0B9F00F4DB91 /* Subscription.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 8A7EB7FB2C8F0B9E00F4DB91 /* Subscription.storekit */; };
 		8A7EB7FE2C8F0F8E00F4DB91 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8A7EB7FD2C8F0F8E00F4DB91 /* StoreKitTestCertificate.cer */; };
+		8AADF9262C9E0FA200B5A7C7 /* Mocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AADF9252C9E0FA200B5A7C7 /* Mocks.swift */; };
 		8AB6D2792C8C9C4A008C1044 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 8AB6D2782C8C9C4A008C1044 /* FirebaseAuth */; };
 		8AB6D27B2C8C9C4A008C1044 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 8AB6D27A2C8C9C4A008C1044 /* FirebaseFirestore */; };
 		8AB6D27E2C8C9C8F008C1044 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 8AB6D27D2C8C9C8F008C1044 /* GoogleSignIn */; };
@@ -82,6 +83,7 @@
 		8A7EB7FB2C8F0B9E00F4DB91 /* Subscription.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; name = Subscription.storekit; path = Assets/Subscription.storekit; sourceTree = SOURCE_ROOT; };
 		8A7EB7FD2C8F0F8E00F4DB91 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 		8A8D7BEA2C93FFCA007B0CC3 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		8AADF9252C9E0FA200B5A7C7 /* Mocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mocks.swift; sourceTree = "<group>"; };
 		8AB6D2812C8C9E88008C1044 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8AB6D2832C8C9EE4008C1044 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8AB6D2872C8CA744008C1044 /* NewsApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsApi.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1BEB5B2C8C615700F98F7E /* Preview Assets.xcassets */,
+				8AADF9252C9E0FA200B5A7C7 /* Mocks.swift */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				8AB6D28C2C8CAA73008C1044 /* ProfileManager.swift in Sources */,
 				8A7EB7F82C8EE0CA00F4DB91 /* Profile.swift in Sources */,
 				8A7EB7F32C8DE46D00F4DB91 /* ArticleDetailManager.swift in Sources */,
+				8AADF9262C9E0FA200B5A7C7 /* Mocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,7 +519,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Assets/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "Assets/Preview\\ Content/Mocks.swift Assets/Preview\\ Content";
 				DEVELOPMENT_TEAM = JU3E5H79L6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -550,7 +554,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Assets/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "Assets/Preview\\ Content/Mocks.swift Assets/Preview\\ Content";
 				DEVELOPMENT_TEAM = JU3E5H79L6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

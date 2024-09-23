@@ -95,20 +95,3 @@ struct ProfileView: View {
 #Preview("Freeloader") {
     ProfileView(manager: MockProfileManager.hasNoPremium)
 }
-
-fileprivate final class MockProfileManager: ProfileManager {
-    static var hasPremium: MockProfileManager {
-        MockProfileManager(hasPremium: true)
-    }
-
-    static var hasNoPremium: MockProfileManager {
-        MockProfileManager(hasPremium: false)
-    }
-
-    private init(hasPremium: Bool) {
-        super.init(id: "0")
-        self.profile = Profile(name: "User Name",
-                               avatar: URL(string: "https://gravatar.com/avatar/282ca84afab836f2adacaa7547ba912fa94c3be40622178fa8f1e94c96ba2cd9"))
-        self.hasPremium = hasPremium
-    }
-}
